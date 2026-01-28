@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Full Stack</title>
+</head>
+<body>
+  <h1>Frontend Page</h1>
+
+  <button onclick="getMessage()">Get Message</button>
+  <p id="msg"></p>
+
+  <hr>
+
+  <input type="text" id="name" placeholder="Enter your name">
+  <button onclick="sendName()">Send Name</button>
+  <p id="reply"></p>
+
+  <script>
+    // GET request
+    function getMessage() {
+      fetch("http://localhost:5000/api/message")
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById("msg").innerText = data.message;
+        });
+    }
+
+    // POST request
+    function sendName() {
+      const name = document.getElementById("name").value;
+
+      fetch("http://localhost:5000/api/name", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ name: name })
+      })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("reply").innerText = data.reply;
+      });
+    }
+  </script>
+</body>
+</html>
